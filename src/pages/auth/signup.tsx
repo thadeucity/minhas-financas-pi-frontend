@@ -8,25 +8,28 @@ import { Card } from '../../Components/Layout/Card';
 import { Input } from '../../Components/Inputs';
 import { Button } from '../../Components/Button';
 
-const Login: NextPage = () => (
+const Signup: NextPage = () => (
   <div>
     <Head>
-      <title>Login</title>
+      <title>Signup</title>
     </Head>
 
     <AppContainer>
       <Card css={authCardCss}>
-        <h1>Login</h1>
+        <h1>Signup</h1>
 
         <AuthForm>
+          <Input name="name" type="text" label="Nome" />
           <Input name="email" type="email" label="Email" />
           <Input name="password" type="password" label="Senha" />
-          <Button>LOGIN</Button>
-          <Link href="/auth/signup" passHref>
-            <a>Criar conta</a>
-          </Link>
-          <Link href="/auth/forgot-password" passHref>
-            <a>Esqueci minha senha</a>
+          <Input
+            name="password-confirm"
+            type="password"
+            label="Confirmação de Senha"
+          />
+          <Button>Cadastrar</Button>
+          <Link href="/auth/login" passHref>
+            <a>Login</a>
           </Link>
         </AuthForm>
       </Card>
@@ -34,4 +37,4 @@ const Login: NextPage = () => (
   </div>
 );
 
-export default Login;
+export default Signup;

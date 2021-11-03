@@ -13,6 +13,7 @@ export const GlobalStyle = createGlobalStyle`
     --clr-alert-red: #ed4337;
 
     --clr-primary: #ADEA1F;
+    --clr-primary-050: #F1FBDA;
   }
 
   html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
@@ -93,5 +94,9 @@ export const GlobalStyle = createGlobalStyle`
     font-weight: 400;
     font-size: 1rem;
     -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background: var(--clr-primary-050);
   }
 `;
