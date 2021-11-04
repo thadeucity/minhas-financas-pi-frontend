@@ -1,4 +1,4 @@
-import { css } from 'styled-components';
+import styled, { css } from 'styled-components';
 
 export const dreamsContainerCss = css`
   flex: 1;
@@ -16,12 +16,30 @@ export const dreamsContainerCss = css`
     margin-top: 1rem;
   }
 
+  .button {
+    width: 100%;
+    margin-top: 2rem;
+  }
+
   button {
     width: 100%;
     font-size: 1.25rem;
     font-weight: 700;
     color: var(--clr-gray000);
     text-transform: uppercase;
-    margin-top: 2rem;
+  }
+`;
+
+export const newDreamFormCardCss = css`
+  width: 100%;
+`;
+
+export const NewDreamForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  > * + * {
+    margin-top: 1rem;
   }
 `;

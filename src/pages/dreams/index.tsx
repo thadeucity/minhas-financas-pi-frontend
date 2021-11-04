@@ -2,6 +2,7 @@ import React from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 
+import Link from 'next/link';
 import { AppContainer } from '../../Components/Layout/AppContainer';
 import { AppBlock } from '../../Components/Layout/AppBlock';
 import { TopBar } from '../../Components/TopBar';
@@ -23,7 +24,11 @@ const Dreams: NextPage = () => (
         <DreamCard title="Teste" progress={2} editLink="/test" />
         <DreamCard title="Teste" progress={2} editLink="/test" />
 
-        <Button>Adicionar</Button>
+        <Link href="/dreams/new" passHref>
+          <a className="button">
+            <Button>Adicionar</Button>
+          </a>
+        </Link>
       </AppBlock>
     </AppContainer>
   </div>
