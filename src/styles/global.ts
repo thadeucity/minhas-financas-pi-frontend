@@ -14,6 +14,11 @@ export const GlobalStyle = createGlobalStyle`
 
     --clr-primary: #ADEA1F;
     --clr-primary-050: #F1FBDA;
+
+    --clr-red-highlight: #FE4A49;
+    --clr-blue-highlight: #51BBFE;
+
+    --sz-mobile-width: 360px;
   }
 
   html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p,
