@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 export const authCardCss = css`
   width: 100%;
-  max-width: 360px;
+  max-width: var(--sz-mobile-width);
   display: flex;
   flex-direction: column;
   justify-content: center;
