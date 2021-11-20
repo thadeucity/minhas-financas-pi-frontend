@@ -1,8 +1,9 @@
 import React from 'react';
-import type { NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 
+import { parseCookies } from 'nookies';
 import { AppContainer } from '../Components/Layout/AppContainer';
 import { AppBlock } from '../Components/Layout/AppBlock';
 import { Card } from '../Components/Layout/Card';
@@ -39,3 +40,22 @@ const Home: NextPage = () => (
 );
 
 export default Home;
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const cookies = parseCookies(ctx);
+
+  const token = cookies['@PiMinhasFinancas:token'];
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+};
