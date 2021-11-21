@@ -65,6 +65,45 @@ export const newDreamContainerCss = css`
 
 export const newDreamFormCardCss = css`
   width: 100%;
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.4rem;
+
+  .contribution {
+    content: '';
+    display: flex;
+    position: absolute;
+
+    width: 0.6rem;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  .contribution_plus {
+    background: green;
+  }
+
+  .contribution_less {
+    background: red;
+  }
+
+  .value_group {
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .dream_percentage {
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+`;
+
+export const contributionCardCss = css`
+  padding: 0.5rem 1rem;
 `;
 
 export const NewDreamForm = styled.form`
