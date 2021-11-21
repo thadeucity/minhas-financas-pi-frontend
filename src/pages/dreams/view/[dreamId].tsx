@@ -1,7 +1,8 @@
 import React from 'react';
-import type { NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 
+import { parseCookies } from 'nookies';
 import { AppContainer } from '../../../Components/Layout/AppContainer';
 import { AppBlock } from '../../../Components/Layout/AppBlock';
 import { TopBar } from '../../../Components/TopBar';
@@ -12,8 +13,9 @@ import {
 import { Button } from '../../../Components/Button';
 import { Card } from '../../../Components/Layout/Card';
 import { ProgressBar } from '../../../Components/pages/Dreams/DreamCardStyles';
+import { readDreamIO } from '../../../io/readDream';
 
-const ViewDream: NextPage = () => (
+const ViewDream: NextPage = ({ dream }) => (
   <div>
     <Head>
       <title>Sonhos</title>
@@ -24,9 +26,11 @@ const ViewDream: NextPage = () => (
         <TopBar title="Sonhos" backHref="/dreams" />
 
         <Card css={newDreamFormCardCss}>
-          <h2>Viagem para a Grécia</h2>
-          <strong>Valor: R$ 15.000,00</strong>
-          <p>Prazo: 01/01/2022</p>
+          <h2>{dream?.name || ''}</h2>
+          <strong>
+            Valor: {`R$ ${(Number(dream.value || '0') / 100).toFixed(2)}`}
+          </strong>
+          <p>Prazo: {new Date(dream.deadline).toLocaleDateString('pt-br')}</p>
         </Card>
 
         <Card css={newDreamFormCardCss}>
@@ -55,3 +59,29 @@ const ViewDream: NextPage = () => (
 );
 
 export default ViewDream;
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  const cookies = parseCookies(ctx);
+
+  const token = cookies['@PiMinhasFinancas:token'];
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+  }
+
+  const [dream, _error] = await readDreamIO(
+    { dreamId: ctx.query.dreamId },
+    ctx,
+  );
+
+  return {
+    props: {
+      dream,
+    },
+  };
+};

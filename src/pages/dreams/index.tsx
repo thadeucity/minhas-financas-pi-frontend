@@ -10,8 +10,9 @@ import { TopBar } from '../../Components/TopBar';
 import { DreamCard } from '../../Components/pages/Dreams/DreamCard';
 import { dreamsContainerCss } from '../../Components/pages/Dreams/DreamsStyles';
 import { Button } from '../../Components/Button';
+import { listUserDreamsIO } from '../../io/listUserDreams';
 
-const Dreams: NextPage = () => (
+const Dreams: NextPage = ({ dreams = [] }) => (
   <div>
     <Head>
       <title>Sonhos</title>
@@ -21,9 +22,14 @@ const Dreams: NextPage = () => (
       <AppBlock css={dreamsContainerCss}>
         <TopBar title="Sonhos" backHref="/" />
 
-        <DreamCard title="Teste" progress={2} editLink="/test" />
-        <DreamCard title="Teste" progress={2} editLink="/test" />
-        <DreamCard title="Teste" progress={2} editLink="/test" />
+        {dreams.map(dream => (
+          <DreamCard
+            key={dream.id}
+            title={dream.name}
+            progress={0}
+            editLink={`/dreams/view/${dream.id}`}
+          />
+        ))}
 
         <Link href="/dreams/new" passHref>
           <a className="button">
@@ -51,7 +57,11 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     };
   }
 
+  const [dreams, _error] = await listUserDreamsIO(ctx);
+
   return {
-    props: {},
+    props: {
+      dreams,
+    },
   };
 };
