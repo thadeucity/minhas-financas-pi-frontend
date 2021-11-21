@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import type { GetServerSideProps, NextPage } from 'next';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
+
+import { yupResolver } from '@hookform/resolvers/yup/dist/yup';
 
 import { parseCookies } from 'nookies';
 import { AppContainer } from '../../Components/Layout/AppContainer';
@@ -14,30 +18,90 @@ import {
 import { Button } from '../../Components/Button';
 import { Card } from '../../Components/Layout/Card';
 import { Input } from '../../Components/Inputs';
+import { createDreamSchema } from '../../Components/pages/Dreams/schemas/createDreamSchema';
+import { createDreamIO } from '../../io/createDream';
 
-const NewDream: NextPage = () => (
-  <div>
-    <Head>
-      <title>Sonhos</title>
-    </Head>
+interface NewDreamFormData {
+  title: string;
+  value: string;
+  deadline: string;
+}
 
-    <AppContainer>
-      <AppBlock css={dreamsContainerCss}>
-        <TopBar title="Sonhos" backHref="/" />
+const NewDream: NextPage = () => {
+  const [isLoading, setIsLoading] = React.useState(false);
 
-        <Card css={newDreamFormCardCss}>
-          <NewDreamForm>
-            <Input name="title" type="text" label="Título" />
-            <Input name="value" type="text" label="Valor" />
-            <Input name="deadline" type="text" label="Prazo" />
-          </NewDreamForm>
-        </Card>
+  const router = useRouter();
 
-        <Button>Adicionar</Button>
-      </AppBlock>
-    </AppContainer>
-  </div>
-);
+  const { register, handleSubmit, formState } = useForm<NewDreamFormData>({
+    resolver: yupResolver(createDreamSchema, { abortEarly: false }),
+  });
+
+  const onSubmit: SubmitHandler<NewDreamFormData> = useCallback(
+    async data => {
+      setIsLoading(true);
+      const [res, err] = await createDreamIO({
+        title: data.title,
+        value: Number(data.value),
+        deadline: data.deadline,
+      });
+
+      if (err) {
+        console.error(err); // TODO - Add error toast
+      } else {
+        console.log({ res, success: true }); // TODO - Add success toast
+        router.push('/dreams');
+      }
+      setIsLoading(false);
+    },
+    [router],
+  );
+
+  return (
+    <div>
+      <Head>
+        <title>Sonhos</title>
+      </Head>
+
+      <AppContainer>
+        <AppBlock css={dreamsContainerCss}>
+          <TopBar title="Sonhos" backHref="/" />
+
+          <Card css={newDreamFormCardCss}>
+            <NewDreamForm>
+              <Input
+                type="text"
+                label="Título"
+                error={formState.errors?.title}
+                {...register('title')}
+              />
+              <Input
+                type="text"
+                label="Valor"
+                error={formState.errors?.value}
+                {...register('value')}
+              />
+              <Input
+                type="date"
+                label="Prazo"
+                error={formState.errors?.deadline}
+                {...register('deadline')}
+              />
+            </NewDreamForm>
+          </Card>
+
+          <Button
+            isLoading={isLoading}
+            type="button"
+            onClick={handleSubmit(onSubmit)}
+            loadingText="Criando ..."
+          >
+            Adicionar
+          </Button>
+        </AppBlock>
+      </AppContainer>
+    </div>
+  );
+};
 
 export default NewDream;
 
