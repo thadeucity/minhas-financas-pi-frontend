@@ -15,7 +15,7 @@ export const TopBarContainer = styled.div`
     justify-content: center;
 
     color: var(--clr-gray000);
-    background: var(--clr-gray700);
+    background: var(--clr-gray750);
 
     width: 3.5rem;
     min-width: 3.5rem;

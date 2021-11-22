@@ -25,8 +25,20 @@ export const ProgressBar = styled.div<{ progress: number }>`
   display: flex;
   flex-direction: row;
   width: 100%;
+  border-radius: 0.3rem;
+  overflow: hidden;
 
   height: 1rem;
 
-  background-color: var(--clr-primary);
+  background-color: var(--clr-gray050);
+  border: 1px solid var(--clr-gray200);
+
+  &::after {
+    content: '';
+    background-color: var(--clr-primary);
+
+    height: 100%;
+    width: ${props => props.progress * 100}%;
+    border-radius: 0.25rem;
+  }
 `;

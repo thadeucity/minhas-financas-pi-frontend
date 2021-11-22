@@ -3,12 +3,14 @@ import { createGlobalStyle } from 'styled-components';
 export const GlobalStyle = createGlobalStyle`
   :root {
     --clr-gray000: #ffffff;
+    --clr-gray050: #f2f2f2;
     --clr-gray150: #E0E0E0;
     --clr-gray200: #d8d8d8;
     --clr-gray400: #AAAAAA;
     --clr-gray500: #999999;
     --clr-gray600: #777777;
     --clr-gray700: #555555;
+    --clr-gray750: #444444;
     --clr-gray800: #333333;
     --clr-alert-red: #ed4337;
 

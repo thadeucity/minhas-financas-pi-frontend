@@ -26,6 +26,8 @@ const ViewDream: NextPage = ({ dream }) => {
     boolean | null
   >(null);
 
+  const [newContributions, setNewContributions] = React.useState([]);
+
   const handleContribution = useCallback(() => {
     setIsModalOpen(true);
   }, []);
@@ -47,18 +49,30 @@ const ViewDream: NextPage = ({ dream }) => {
         isNegative: contributionIsWithdrawal,
         dreamId: dream?.id,
       });
+
+      setNewContributions(prevContributions => [
+        ...prevContributions,
+        {
+          id: `new contri - ${prevContributions.length}`,
+          is_negative: contributionIsWithdrawal,
+          value: Number(value),
+        },
+      ]);
+
+      setContributionIsWithdraw(null);
+      setIsModalOpen(false);
     },
     [contributionIsWithdrawal, dream?.id],
   );
 
   const totalContributionsValue = useMemo(
     () =>
-      dream?.contributions.reduce((acc, curr) => {
+      [...dream?.contributions, ...newContributions].reduce((acc, curr) => {
         if (curr.is_negative) return acc - (curr.value || 0);
 
         return acc + (curr.value || 0);
       }, 0),
-    [dream?.contributions],
+    [dream?.contributions, newContributions],
   );
 
   const contributionPercentage = useMemo(
@@ -98,7 +112,7 @@ const ViewDream: NextPage = ({ dream }) => {
               {formatCurrency(totalContributionsValue)} <span>de</span>{' '}
               {formatCurrency(dream.value)}
             </strong>
-            <ProgressBar progress={0.5} />
+            <ProgressBar progress={contributionPercentage} />
             <p className="dream_percentage">
               Você já guardou {(contributionPercentage * 100).toFixed(1)}% do
               dinheiro necessário
@@ -110,7 +124,7 @@ const ViewDream: NextPage = ({ dream }) => {
             </p>
           </Card>
 
-          {dream?.contributions.map(contribution => (
+          {[...dream?.contributions, ...newContributions].map(contribution => (
             <Card
               css={[newDreamFormCardCss, contributionCardCss]}
               key={contribution.id}
