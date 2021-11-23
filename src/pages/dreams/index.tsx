@@ -26,7 +26,7 @@ const Dreams: NextPage = ({ dreams = [] }) => (
           <DreamCard
             key={dream.id}
             title={dream.name}
-            progress={0}
+            progress={dream.progression}
             editLink={`/dreams/view/${dream.id}`}
           />
         ))}

@@ -141,7 +141,9 @@ const ViewDream: NextPage = ({ dream }) => {
           ))}
 
           <Button onClick={handleAddValue}>Adicionar Valor</Button>
-          <Button onClick={handleRemoveValue}>Remover Valor</Button>
+          <Button onClick={handleRemoveValue} className="red_button">
+            Remover Valor
+          </Button>
         </AppBlock>
       </AppContainer>
 
@@ -176,8 +178,6 @@ export const getServerSideProps: GetServerSideProps = async ctx => {
     { dreamId: String(ctx.query.dreamId) },
     ctx,
   );
-
-  console.log({ contr: dream?.contributions });
 
   return {
     props: {

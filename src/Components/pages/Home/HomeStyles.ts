@@ -12,6 +12,10 @@ export const homeContainerCss = css`
     width: 100%;
   }
 
+  a + a {
+    margin-top: 2rem;
+  }
+
   .home__card {
     width: 100%;
     min-height: 8rem;

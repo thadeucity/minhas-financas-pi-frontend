@@ -61,6 +61,10 @@ export const newDreamContainerCss = css`
     color: var(--clr-gray000);
     text-transform: uppercase;
   }
+
+  .red_button {
+    background: var(--clr-red-highlight);
+  }
 `;
 
 export const newDreamFormCardCss = css`
@@ -68,6 +72,11 @@ export const newDreamFormCardCss = css`
   position: relative;
   overflow: hidden;
   border-radius: 0.4rem;
+
+  h2 {
+    font-size: 1.125rem;
+    margin-bottom: 0.5rem;
+  }
 
   .contribution {
     content: '';
@@ -81,11 +90,11 @@ export const newDreamFormCardCss = css`
   }
 
   .contribution_plus {
-    background: green;
+    background: var(--clr-primary);
   }
 
   .contribution_less {
-    background: red;
+    background: var(--clr-red-highlight);
   }
 
   .value_group {
