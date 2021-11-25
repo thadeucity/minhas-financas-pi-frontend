@@ -14,10 +14,20 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   error?: FieldError;
   icon?: React.ComponentType<IconBaseProps>;
+  maskFunction?: (value: string) => string;
 }
 
 const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
-  { name, label, error = null, disabled = false, icon: Icon, ...rest },
+  {
+    name,
+    label,
+    error = null,
+    disabled = false,
+    icon: Icon,
+    maskFunction,
+    onChange,
+    ...rest
+  },
   ref,
 ) => (
   <InputWrapper>
@@ -31,6 +41,14 @@ const InputBase: ForwardRefRenderFunction<HTMLInputElement, InputProps> = (
         id={`input-${name}`}
         disabled={disabled}
         size={1}
+        onChange={event => {
+          if (maskFunction) {
+            const { value: tVal } = event.target;
+            event.target.value = maskFunction(tVal);
+          }
+
+          if (onChange) onChange(event);
+        }}
         {...rest}
       />
       {error ? (

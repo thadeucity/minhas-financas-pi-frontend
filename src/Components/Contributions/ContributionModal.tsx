@@ -32,9 +32,16 @@ export const ContributionModal: React.FC<ContributionModalProps> = ({
           <b>{isWithdrawal ? 'Remover:' : 'Adicionar:'}</b>
           <Input
             name="value"
-            type="number"
+            type="text"
             label="Valor"
-            onChange={e => setValue(e.target.value)}
+            onChange={event => {
+              const { value: tVal } = event.target;
+              event.target.value = tVal
+                .replace(/[^\d]/g, '')
+                .replace(/(\d+)(\d\d)$/g, '$1,$2');
+
+              setValue(event.target.value.replace(/[^\d]/g, ''));
+            }}
           />
 
           <Button

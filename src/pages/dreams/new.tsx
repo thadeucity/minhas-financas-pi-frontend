@@ -39,9 +39,11 @@ const NewDream: NextPage = () => {
   const onSubmit: SubmitHandler<NewDreamFormData> = useCallback(
     async data => {
       setIsLoading(true);
+      console.log(data.value);
+
       const [res, err] = await createDreamIO({
         title: data.title,
-        value: Number(data.value),
+        value: Number(data.value.replace(/\D/g, '')),
         deadline: data.deadline,
       });
 
@@ -78,6 +80,9 @@ const NewDream: NextPage = () => {
                 type="text"
                 label="Valor"
                 error={formState.errors?.value}
+                maskFunction={val =>
+                  val.replace(/[^\d]/g, '').replace(/(\d+)(\d\d)$/g, '$1,$2')
+                }
                 {...register('value')}
               />
               <Input
