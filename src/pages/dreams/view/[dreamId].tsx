@@ -3,6 +3,7 @@ import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
 
 import { parseCookies } from 'nookies';
+import { FiTrash2 } from 'react-icons/fi';
 import { AppContainer } from '../../../Components/Layout/AppContainer';
 import { AppBlock } from '../../../Components/Layout/AppBlock';
 import { TopBar } from '../../../Components/TopBar';
@@ -19,6 +20,7 @@ import { ContributionModal } from '../../../Components/Contributions/Contributio
 import { createContributionIO } from '../../../io/createContribution';
 import { formatCurrency } from '../../../utils/formatCurrency';
 import { monthDifference } from '../../../utils/monthDifference';
+import { deleteContributionIO } from '../../../io/deleteContribution';
 
 const ViewDream: NextPage = ({ dream }) => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -27,6 +29,8 @@ const ViewDream: NextPage = ({ dream }) => {
   >(null);
 
   const [newContributions, setNewContributions] = React.useState([]);
+
+  const [removedContributions, setRemovedContributions] = React.useState([]);
 
   const handleContribution = useCallback(() => {
     setIsModalOpen(true);
@@ -65,14 +69,30 @@ const ViewDream: NextPage = ({ dream }) => {
     [contributionIsWithdrawal, dream?.id],
   );
 
+  const handleDeleteContribution = useCallback(id => {
+    deleteContributionIO(id).then(() => {
+      setRemovedContributions(prevRemoved => [...prevRemoved, id]);
+    });
+  }, []);
+
+  const contributionsToShow = React.useMemo(() => {
+    const allContributions = [
+      ...(dream?.contributions || []),
+      ...newContributions,
+    ];
+    return allContributions.filter(
+      contribution => !removedContributions.includes(contribution.id),
+    );
+  }, [dream?.contributions, newContributions, removedContributions]);
+
   const totalContributionsValue = useMemo(
     () =>
-      [...dream?.contributions, ...newContributions].reduce((acc, curr) => {
+      contributionsToShow.reduce((acc, curr) => {
         if (curr.is_negative) return acc - (curr.value || 0);
 
         return acc + (curr.value || 0);
       }, 0),
-    [dream?.contributions, newContributions],
+    [contributionsToShow],
   );
 
   const contributionPercentage = useMemo(
@@ -124,7 +144,7 @@ const ViewDream: NextPage = ({ dream }) => {
             </p>
           </Card>
 
-          {[...dream?.contributions, ...newContributions].map(contribution => (
+          {contributionsToShow.map(contribution => (
             <Card
               css={[newDreamFormCardCss, contributionCardCss]}
               key={contribution.id}
@@ -137,6 +157,12 @@ const ViewDream: NextPage = ({ dream }) => {
                 }`}
               />
               <p>{formatCurrency(contribution.value)}</p>
+              <button
+                type="button"
+                onClick={() => handleDeleteContribution(contribution.id)}
+              >
+                <FiTrash2 />
+              </button>
             </Card>
           ))}
 

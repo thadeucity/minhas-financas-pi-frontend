@@ -113,6 +113,29 @@ export const newDreamFormCardCss = css`
 
 export const contributionCardCss = css`
   padding: 0.5rem 1rem;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    width: 2rem;
+    margin-right: -1rem;
+
+    font-size: 1.25rem;
+    background: transparent;
+    color: var(--clr-gray400);
+    transition: color 200ms ease-in-out;
+
+    &:hover {
+      color: var(--clr-red-highlight);
+    }
+  }
 `;
 
 export const NewDreamForm = styled.form`
