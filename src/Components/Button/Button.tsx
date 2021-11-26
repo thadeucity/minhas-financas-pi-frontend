@@ -1,7 +1,8 @@
-import React, { ButtonHTMLAttributes, useMemo } from 'react';
+import { HTMLMotionProps } from 'framer-motion';
+import React, { useMemo } from 'react';
 import { ButtonDefault } from './styles';
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
+type ButtonProps = HTMLMotionProps<'button'> & {
   isLoading?: boolean;
   isConfirmed?: boolean;
   isFailed?: boolean;

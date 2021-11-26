@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
-export const TopBarContainer = styled.div`
+export const TopBarContainer = styled(motion.div)`
   width: 100%;
 
   display: flex;

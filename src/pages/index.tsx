@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 
 import { parseCookies } from 'nookies';
+import { motion } from 'framer-motion';
 import { AppContainer } from '../Components/Layout/AppContainer';
 import { AppBlock } from '../Components/Layout/AppBlock';
 import { Card } from '../Components/Layout/Card';
@@ -17,22 +18,34 @@ const Home: NextPage = () => (
 
     <AppContainer>
       <AppBlock css={homeContainerCss}>
-        <Link href="/dreams">
-          <a>
+        <Link href="/dreams" passHref>
+          <motion.a
+            initial={{ opacity: 0, x: -120 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 120 }}
+          >
             <Card className="home__card card__dreams">Sonhos</Card>
-          </a>
+          </motion.a>
         </Link>
 
-        <Link href="/expenses">
-          <a>
+        <Link href="/expenses" passHref>
+          <motion.a
+            initial={{ opacity: 0, x: -120 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 120 }}
+          >
             <Card className="home__card card__expenses">Gastos</Card>
-          </a>
+          </motion.a>
         </Link>
 
-        <Link href="/tips">
-          <a>
+        <Link href="/tips" passHref>
+          <motion.a
+            initial={{ opacity: 0, x: -120 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 120 }}
+          >
             <Card className="home__card card__tips">Dicas</Card>
-          </a>
+          </motion.a>
         </Link>
       </AppBlock>
     </AppContainer>

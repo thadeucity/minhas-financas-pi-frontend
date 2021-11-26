@@ -9,6 +9,7 @@ import { AppBlock } from '../../../Components/Layout/AppBlock';
 import { TopBar } from '../../../Components/TopBar';
 import {
   contributionCardCss,
+  ContributionsBox,
   newDreamContainerCss,
   newDreamFormCardCss,
 } from '../../../Components/pages/Dreams/DreamsStyles';
@@ -111,6 +112,22 @@ const ViewDream: NextPage = ({ dream }) => {
     [dream.value, monthsToDeadline, totalContributionsValue],
   );
 
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.5,
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, x: -120 },
+    show: { opacity: 1, x: 0 },
+  };
+
   return (
     <div>
       <Head>
@@ -144,27 +161,34 @@ const ViewDream: NextPage = ({ dream }) => {
             </p>
           </Card>
 
-          {contributionsToShow.map(contribution => (
-            <Card
-              css={[newDreamFormCardCss, contributionCardCss]}
-              key={contribution.id}
-            >
-              <span
-                className={`contribution ${
-                  contribution.is_negative
-                    ? 'contribution_less'
-                    : 'contribution_plus'
-                }`}
-              />
-              <p>{formatCurrency(contribution.value)}</p>
-              <button
-                type="button"
-                onClick={() => handleDeleteContribution(contribution.id)}
+          <ContributionsBox
+            variants={container}
+            initial="hidden"
+            animate="show"
+          >
+            {contributionsToShow.map(contribution => (
+              <Card
+                css={[newDreamFormCardCss, contributionCardCss]}
+                key={contribution.id}
+                variants={item}
               >
-                <FiTrash2 />
-              </button>
-            </Card>
-          ))}
+                <span
+                  className={`contribution ${
+                    contribution.is_negative
+                      ? 'contribution_less'
+                      : 'contribution_plus'
+                  }`}
+                />
+                <p>{formatCurrency(contribution.value)}</p>
+                <button
+                  type="button"
+                  onClick={() => handleDeleteContribution(contribution.id)}
+                >
+                  <FiTrash2 />
+                </button>
+              </Card>
+            ))}
+          </ContributionsBox>
 
           <Button onClick={handleAddValue}>Adicionar Valor</Button>
           <Button onClick={handleRemoveValue} className="red_button">

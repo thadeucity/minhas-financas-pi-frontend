@@ -15,7 +15,12 @@ export const DreamCard: React.FC<DreamCardProps> = ({
   progress,
 }) => (
   <Link href={editLink} passHref>
-    <DreamCardContainer>
+    <DreamCardContainer
+      initial={{ opacity: 0, x: -120 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 120 }}
+      transition={{ delay: 0.2 }}
+    >
       <div className="dream_card__top_bar">
         <h2>{title}</h2>
         <FiEdit />

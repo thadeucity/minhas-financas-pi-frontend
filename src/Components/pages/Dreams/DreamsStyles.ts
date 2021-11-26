@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import styled, { css } from 'styled-components';
 
 export const dreamsContainerCss = css`
@@ -145,5 +146,21 @@ export const NewDreamForm = styled.form`
 
   > * + * {
     margin-top: 1rem;
+  }
+`;
+
+export const ContributionsBox = styled(motion.div)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+
+  > * {
+    margin: 0;
+  }
+
+  > * + * {
+    margin-top: 0.75rem;
   }
 `;

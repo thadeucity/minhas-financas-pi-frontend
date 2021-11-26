@@ -66,9 +66,14 @@ const NewDream: NextPage = () => {
 
       <AppContainer>
         <AppBlock css={dreamsContainerCss}>
-          <TopBar title="Sonhos" backHref="/" />
+          <TopBar title="Sonhos" backHref="/dreams" />
 
-          <Card css={newDreamFormCardCss}>
+          <Card
+            css={newDreamFormCardCss}
+            initial={{ opacity: 0, x: -120 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 120 }}
+          >
             <NewDreamForm>
               <Input
                 type="text"
@@ -99,6 +104,10 @@ const NewDream: NextPage = () => {
             type="button"
             onClick={handleSubmit(onSubmit)}
             loadingText="Criando ..."
+            initial={{ opacity: 0, y: 120 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 120 }}
+            transition={{ delay: 0.2 }}
           >
             Adicionar
           </Button>

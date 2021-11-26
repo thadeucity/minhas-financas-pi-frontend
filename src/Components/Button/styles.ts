@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion';
 import styled, { keyframes } from 'styled-components';
 
 interface ButtonProps {
@@ -24,7 +25,7 @@ const getButtonColor = (props: ButtonProps) => {
   return '--button-base-clr';
 };
 
-export const ButtonDefault = styled.button<ButtonProps>`
+export const ButtonDefault = styled(motion.button)<ButtonProps>`
   --button-hover-brightness: 0.9;
 
   position: relative;

@@ -1,6 +1,7 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const DreamCardContainer = styled.a`
+export const DreamCardContainer = styled(motion.a)`
   display: flex;
   flex-direction: column;
   justify-content: center;

@@ -85,7 +85,7 @@ export const InputContainer = styled.div<InputContainerProps>`
   }
 
   &:focus-within {
-    border-color: ${props => props.theme.colors.primary};
+    border-color: var(--clr-primary);
 
     .input-tooltip {
       opacity: 1;

@@ -4,6 +4,7 @@ import Head from 'next/head';
 
 import Link from 'next/link';
 import { parseCookies } from 'nookies';
+import { motion } from 'framer-motion';
 import { AppContainer } from '../../Components/Layout/AppContainer';
 import { AppBlock } from '../../Components/Layout/AppBlock';
 import { TopBar } from '../../Components/TopBar';
@@ -32,9 +33,15 @@ const Dreams: NextPage = ({ dreams = [] }) => (
         ))}
 
         <Link href="/dreams/new" passHref>
-          <a className="button">
+          <motion.a
+            initial={{ opacity: 0, y: 120 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 120 }}
+            transition={{ delay: 0.4 }}
+            className="button"
+          >
             <Button>Adicionar</Button>
-          </a>
+          </motion.a>
         </Link>
       </AppBlock>
     </AppContainer>
