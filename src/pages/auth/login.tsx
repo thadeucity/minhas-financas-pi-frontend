@@ -16,6 +16,7 @@ import { Button } from '../../Components/Button';
 import { loginSchema } from '../../Components/pages/Auth/schemas/authSchemas';
 import { loginIO } from '../../io/login';
 import { useUser } from '../../hooks/User';
+import { useToast } from '../../hooks/Toast';
 
 interface LoginFormData {
   email: string;
@@ -27,6 +28,7 @@ const Login: NextPage = () => {
 
   const router = useRouter();
   const { updateUserData } = useUser();
+  const { addToast } = useToast();
 
   const { register, handleSubmit, formState } = useForm<LoginFormData>({
     resolver: yupResolver(loginSchema, { abortEarly: false }),
@@ -41,7 +43,7 @@ const Login: NextPage = () => {
       });
 
       if (err) {
-        console.error(err); // TODO - Add error toast
+        addToast({ text: 'Login ou senha errados', type: 'error' });
       } else {
         setCookie(null, '@PiMinhasFinancas:token', res?.token, {
           maxAge: 60 * 60 * 24, // 1 day
@@ -50,11 +52,10 @@ const Login: NextPage = () => {
         });
         updateUserData(res?.user);
         router.push('/');
-        console.log({ res, success: true }); // TODO - Add success toast
       }
       setIsLoading(false);
     },
-    [router, updateUserData],
+    [addToast, router, updateUserData],
   );
 
   return (

@@ -20,6 +20,7 @@ import { Card } from '../../Components/Layout/Card';
 import { Input } from '../../Components/Inputs';
 import { createDreamSchema } from '../../Components/pages/Dreams/schemas/createDreamSchema';
 import { createDreamIO } from '../../io/createDream';
+import { useToast } from '../../hooks/Toast';
 
 interface NewDreamFormData {
   title: string;
@@ -31,6 +32,7 @@ const NewDream: NextPage = () => {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const router = useRouter();
+  const { addToast } = useToast();
 
   const { register, handleSubmit, formState } = useForm<NewDreamFormData>({
     resolver: yupResolver(createDreamSchema, { abortEarly: false }),
@@ -48,9 +50,9 @@ const NewDream: NextPage = () => {
       });
 
       if (err) {
-        console.error(err); // TODO - Add error toast
+        addToast({ text: 'Erro ao cadastrar novo sonho', type: 'error' });
       } else {
-        console.log({ res, success: true }); // TODO - Add success toast
+        addToast({ text: 'Sonho cadastrado com sucesso', type: 'success' });
         router.push('/dreams');
       }
       setIsLoading(false);

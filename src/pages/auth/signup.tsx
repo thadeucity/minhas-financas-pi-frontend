@@ -14,6 +14,7 @@ import { Input } from '../../Components/Inputs';
 import { Button } from '../../Components/Button';
 import { signupSchema } from '../../Components/pages/Auth/schemas/authSchemas';
 import { signupIO } from '../../io/signup';
+import { useToast } from '../../hooks/Toast';
 
 interface SignupFormData {
   name: string;
@@ -24,6 +25,8 @@ interface SignupFormData {
 
 const Signup: NextPage = () => {
   const [isLoading, setIsLoading] = React.useState(false);
+
+  const { addToast } = useToast();
 
   const router = useRouter();
 
@@ -41,14 +44,14 @@ const Signup: NextPage = () => {
       });
 
       if (err) {
-        console.error(err); // TODO - Add error toast
+        addToast({ text: 'Erro ao realizar cadastro', type: 'error' });
       } else {
-        console.log({ res, success: true }); // TODO - Add success toast
+        addToast({ text: 'Cadastro realizado com sucesso', type: 'success' });
         router.push('/auth/login');
       }
       setIsLoading(false);
     },
-    [router],
+    [addToast, router],
   );
 
   return (
