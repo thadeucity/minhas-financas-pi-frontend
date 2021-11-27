@@ -6,7 +6,8 @@ export const ToastsWrapper = styled.div`
   align-items: center;
   justify-content: flex-start;
 
-  margin-top: 0.5rem;
   width: 100%;
   overflow: hidden;
+
+  padding: 0 32px;
 `;

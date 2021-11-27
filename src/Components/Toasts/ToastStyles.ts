@@ -25,9 +25,11 @@ export const ToastBlock = styled(motion.button)<ToastBlockProps>`
   overflow: hidden;
 
   padding: 0.5rem 1rem;
-
   margin-bottom: 0.625rem;
-  margin-right: 1.25rem;
+
+  &:first-of-type {
+    margin-top: 48px;
+  }
 
   strong {
     font-size: 1rem;

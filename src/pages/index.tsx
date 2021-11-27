@@ -9,48 +9,65 @@ import { AppContainer } from '../Components/Layout/AppContainer';
 import { AppBlock } from '../Components/Layout/AppBlock';
 import { Card } from '../Components/Layout/Card';
 import { homeContainerCss } from '../Components/pages/Home/HomeStyles';
+import { useToast } from '../hooks/Toast';
 
-const Home: NextPage = () => (
-  <div>
-    <Head>
-      <title>Homepage</title>
-    </Head>
+const Home: NextPage = () => {
+  const { addToast } = useToast();
 
-    <AppContainer>
-      <AppBlock css={homeContainerCss}>
-        <Link href="/dreams" passHref>
-          <motion.a
-            initial={{ opacity: 0, x: -120 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 120 }}
-          >
-            <Card className="home__card card__dreams">Sonhos</Card>
-          </motion.a>
-        </Link>
+  return (
+    <div>
+      <Head>
+        <title>Homepage</title>
+      </Head>
 
-        <Link href="/expenses" passHref>
-          <motion.a
-            initial={{ opacity: 0, x: -120 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 120 }}
-          >
-            <Card className="home__card card__expenses">Gastos</Card>
-          </motion.a>
-        </Link>
+      <AppContainer>
+        <AppBlock css={homeContainerCss}>
+          <Link href="/dreams" passHref>
+            <motion.a
+              initial={{ opacity: 0, x: -120 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 120 }}
+            >
+              <Card className="home__card card__dreams">Sonhos</Card>
+            </motion.a>
+          </Link>
 
-        <Link href="/tips" passHref>
-          <motion.a
-            initial={{ opacity: 0, x: -120 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 120 }}
-          >
-            <Card className="home__card card__tips">Dicas</Card>
-          </motion.a>
-        </Link>
-      </AppBlock>
-    </AppContainer>
-  </div>
-);
+          <Link href="#" passHref>
+            <motion.a
+              initial={{ opacity: 0, x: -120 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 120 }}
+              onClick={() =>
+                addToast({
+                  text: 'Sessão de Gastos em construção',
+                  type: 'warning',
+                })
+              }
+            >
+              <Card className="home__card card__expenses">Gastos</Card>
+            </motion.a>
+          </Link>
+
+          <Link href="#" passHref>
+            <motion.a
+              initial={{ opacity: 0, x: -120 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 120 }}
+              onClick={() =>
+                addToast({
+                  text: 'Sessão de Dicas em construção',
+                  type: 'warning',
+                })
+              }
+            >
+              <Card className="home__card card__tips">Dicas</Card>
+            </motion.a>
+          </Link>
+        </AppBlock>
+      </AppContainer>
+    </div>
+  );
+};
 
 export default Home;
 
